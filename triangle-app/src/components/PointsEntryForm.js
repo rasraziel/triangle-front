@@ -17,14 +17,12 @@ export default class PointsEntryForm extends Component{
         };
     }
 
-    onAXChange=(e)=> this.setState({aX:e.target.value});
-    onBXChange=(e)=> this.setState({bX:e.target.value});
-    onCXChange=(e)=> this.setState({cX:e.target.value});
-    onAYChange=(e)=> this.setState({aY:e.target.value});
-    onBYChange=(e)=> this.setState({bY:e.target.value});
-    onCYChange=(e)=> this.setState({cY:e.target.value});
-
-    isAxCorrect = () => Number(this.state.aX)>=0 && Number(this.state.aX)<=300;
+    onAXChange=(e)=> this.setState({aX: e.target.value>300 ? 300 :Math.abs(e.target.value)});
+    onBXChange=(e)=> this.setState({bX: e.target.value>300 ? 300 :Math.abs(e.target.value)});
+    onCXChange=(e)=> this.setState({cX: e.target.value>300 ? 300 :Math.abs(e.target.value)});
+    onAYChange=(e)=> this.setState({aY: e.target.value>300 ? 300 :Math.abs(e.target.value)});
+    onBYChange=(e)=> this.setState({bY: e.target.value>300 ? 300 :Math.abs(e.target.value)});
+    onCYChange=(e)=> this.setState({cY: e.target.value>300 ? 300 :Math.abs(e.target.value)});
     
 
     validate = () =>{
@@ -42,7 +40,7 @@ export default class PointsEntryForm extends Component{
     axios.post("points", data)
          .then(resp=>{
              console.log(resp);
-             this.props.changeAnswer(resp.data);
+             this.props.changeAnswer("Triangle: " + resp.data);
         }).catch(error=>{
             console.log(error);
             this.props.changeAnswer("This is not a triangle!");
@@ -52,7 +50,9 @@ export default class PointsEntryForm extends Component{
 
 
     render(){
-    return (
+        const{aX, bX, cX, aY, bY, cY } = this.state;
+		const disabled = (aX === '' || bX === '' || cX === '' || aY === '' || bY === '' || cY === '') ? true : false;
+         return (
                 <div className="points" style={this.props.style}>
                     <p>Insert x and y coordinates of the 3 vertices of the triangle. (0-300)</p>
 
@@ -84,7 +84,7 @@ export default class PointsEntryForm extends Component{
                             required></input>
                         <span className="validity"></span>
                     </form>
-                    <button className="calcBtn" onClick={this.calculate}>Calculate</button>
+                    <button className="calcBtn" disabled={disabled} onClick={this.calculate}>Calculate</button>
                 </div>
 			);
     }
