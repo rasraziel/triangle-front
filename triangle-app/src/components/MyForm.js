@@ -57,7 +57,7 @@ export default class MyForm extends Component {
                 <div className="drawing">
                     <Stage width={400} height={300}>
                         <Layer>
-                          {axis &&  <Line closed points={[axis.a.x, 300-axis.a.y, axis.b.x, 300-axis.b.y, axis.c.x, 300-axis.c.y]} fill="red" />}   
+                          {axis &&  <Line closed points={[axis.a.x, 300-axis.a.y, axis.b.x, 300-axis.b.y, axis.c.x, 300-axis.c.y]} stroke="black" draggable='true' strokeWidth={1} fill="red" />}   
                         </Layer>
                     </Stage>
                 </div>
