@@ -40,7 +40,7 @@ export default class PointsEntryForm extends Component{
     axios.post("points", data)
          .then(resp=>{
              console.log(resp);
-             this.props.changeAnswer("Triangle: " + resp.data);
+             this.props.changeAnswer("Triangle: " + resp.data, data);
         }).catch(error=>{
             console.log(error);
             this.props.changeAnswer("This is not a triangle!");
@@ -57,7 +57,7 @@ export default class PointsEntryForm extends Component{
                     <p>Insert x and y coordinates of the 3 vertices of the triangle. (0-300)</p>
 
                     <form action="/">
-                        <label for="fname">Vertex point A (x, y)</label><br/>
+                        <label htmlFor="fname">Vertex point A (x, y)</label><br/>
                         <input type="number" id="side1_posX" value={this.state.aX} onChange={this.onAXChange} placeholder="e.g.40" min="0" max="300" step="0.01"
                             required></input>
                         <span className="validity"></span>
@@ -67,7 +67,7 @@ export default class PointsEntryForm extends Component{
                         <span className="validity"></span>
                         <br/>
 
-                        <label for="lname">Vertex point B (x, y)</label><br/>
+                        <label htmlFor="lname">Vertex point B (x, y)</label><br/>
                         <input type="number" id="side2_posX" value={this.state.bX} onChange={this.onBXChange} placeholder="e.g.40" min="0" max="300" step="0.01"
                             required></input>
                         <span className="validity"></span>
@@ -76,7 +76,7 @@ export default class PointsEntryForm extends Component{
                         <span className="validity"></span>
                         <br/>
 
-                        <label for="lname">Vertex point C (x, y)</label><br/>
+                        <label htmlFor="lname">Vertex point C (x, y)</label><br/>
                         <input type="number" id="side3_posX" value={this.state.cX} onChange={this.onCXChange} placeholder="e.g.160" min="0" max="300" step="0.01"
                             required></input>
                         <span className="validity"></span>

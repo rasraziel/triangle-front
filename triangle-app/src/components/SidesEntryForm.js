@@ -21,21 +21,26 @@ export default class SidesEntryForm extends Component{
 
     calculate = () => {
         
-    const data ={
-		"ab": this.state.ab,
-		"bc": this.state.bc,
-		"ca": this.state.ca
-	}
+		const data ={
+			"ab": this.state.ab,
+			"bc": this.state.bc,
+			"ca": this.state.ca
+		}
 
-    axios.post("sides", data)
-         .then(resp=>{
-             console.log(resp);
-			 this.props.changeAnswer("Triangle: " + resp.data);
-        }).catch(error=>{
-            console.log(error);
-			this.props.changeAnswer("This is not a triangle!");
-        }).finally(()=>this.setState({ab:'',bc:'', ca:''}));
-
+  		  axios.post("sides", data)
+        	 .then(resp=>{
+				// 3rd point x,y coordinates calculations
+				const x3 = (Math.pow(data.ca,2) - Math.pow(data.bc,2) + Math.pow(data.ab,2))/(2*data.ab);
+				const y3 = Math.sqrt(Math.pow(data.ca, 2) - Math.pow(x3, 2));
+				const dataPoints ={
+						"a":{"x":0, "y":0},
+						"b":{"x":data.ab, "y":0},
+						"c":{"x":x3, "y":y3}
+				}
+				this.props.changeAnswer("Triangle: " + resp.data, dataPoints);
+     	   }).catch(error=>{
+				this.props.changeAnswer("This is not a triangle!");
+      	   }).finally(()=>this.setState({ab:'',bc:'', ca:''}));
     }
 
     render(){
@@ -48,17 +53,17 @@ export default class SidesEntryForm extends Component{
 					<p>Insert the side values for the triangle. As a default, lines are connected
 						to construct a triangle. (0-300)</p>
 					<form action="/">
-						<label for="fname">side A</label>
+						<label htmlFor="fname">side A</label>
 						<input type="number" id="sideA" value={this.state.ab} onChange={this.onABChange} placeholder="e.g.40" min="0" max="300" required></input>
 						<span className="validity"></span>
 						<br/>
 
-						<label for="lname">side B</label>
+						<label htmlFor="lname">side B</label>
 						<input type="number" id="sideB" value={this.state.bc} onChange={this.onBCChange} placeholder="e.g.40" min="0" max="300" required></input>
 						<span className="validity"></span>
 						<br/>
 
-						<label for="lname">side C</label>
+						<label htmlFor="lname">side C</label>
 						<input type="number" id="sideC" value={this.state.ca} onChange={this.onCAChange} placeholder="e.g.160" min="0" max="300" required></input>
 						<span className="validity"></span>
 					</form>

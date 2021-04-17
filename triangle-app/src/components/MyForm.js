@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Stage, Layer, Line } from 'react-konva';
 import PointsEntryForm from './PointsEntryForm';
 import SidesEntryForm from './SidesEntryForm';
-import logo from '../images/a.jpg';
 import '../App.css';
 
 
@@ -16,6 +16,7 @@ export default class MyForm extends Component {
             selectionInfoVisible: true,
             pointsWindowVisible: false,
             sidesWindowVisible: false,
+            coordinates: null,
             answer: 'triangle type...'
         };
     }
@@ -34,11 +35,12 @@ export default class MyForm extends Component {
             this.setState({sidesWindowVisible:false, pointsWindowVisible: false, selectionInfoVisible: true})
     }
 
-    changeAnswer=(result)=> this.setState({answer: result});
+    changeAnswer=(result, coordinates)=> this.setState({answer: result, coordinates: coordinates});
 
     render() {
         
        const {selectionInfoVisible, pointsWindowVisible, sidesWindowVisible} = this.state;
+       const axis = this.state.coordinates;
     return (
         <div className="container">
             <div className="infoText">
@@ -48,12 +50,16 @@ export default class MyForm extends Component {
                 </p>
             </div>
             <div className="btns" style={{border: '0'}}>
-                <button className="coordinates" onClick={this.hideContentPoints} >coordinates</button>
-                <button className="sidesBtn" onClick={this.hideContentSides}>sides</button>
+                <button className="coordinates" onClick={this.hideContentPoints} >Coordinates</button>
+                <button className="sidesBtn" onClick={this.hideContentSides}>Sides</button>
             </div>
             <div className="content">
                 <div className="drawing">
-                    <img src={logo}></img>
+                    <Stage width={400} height={300}>
+                        <Layer>
+                          {axis &&  <Line closed points={[axis.a.x, 300-axis.a.y, axis.b.x, 300-axis.b.y, axis.c.x, 300-axis.c.y]} fill="red" />}   
+                        </Layer>
+                    </Stage>
                 </div>
                 <div className="inputs">
                   <h2 style={{border: '0', display: selectionInfoVisible ? 'flex':'none'}} className="hiddenContent">Choose your input as coordinates or side lengths of the triangle</h2>
@@ -65,9 +71,6 @@ export default class MyForm extends Component {
 		    	<h2 id="txtValue">{this.state.answer}</h2>
 	    	</div>
 	    </div>
-    );
-        
-    }  
-        
-       
+      );
+    }      
 }
