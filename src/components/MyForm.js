@@ -17,6 +17,8 @@ export default class MyForm extends Component {
             pointsWindowVisible: false,
             sidesWindowVisible: false,
             coordinates: null,
+            color1: null,
+            color2: null,
             answer: 'triangle type...'
         };
     }
@@ -35,11 +37,15 @@ export default class MyForm extends Component {
             this.setState({ sidesWindowVisible: false, pointsWindowVisible: false, selectionInfoVisible: true })
     }
 
-    changeAnswer = (result, coordinates) => this.setState({ answer: result, coordinates: coordinates });
+    getRandomColor = () => {
+        return "#" + ('00000' + (Math.random() * (1 << 24) | 0).toString(16)).slice(-6);
+    }
+
+    changeAnswer = (result, coordinates, color1, color2) => this.setState({ answer: result, coordinates: coordinates, color1: color1, color2: color2 });
 
     render() {
 
-        const { selectionInfoVisible, pointsWindowVisible, sidesWindowVisible } = this.state;
+        const { selectionInfoVisible, pointsWindowVisible, sidesWindowVisible, color1, color2 } = this.state;
         const axis = this.state.coordinates;
         return (
             <div className="container">
@@ -59,17 +65,18 @@ export default class MyForm extends Component {
                             <Layer>
                                 {axis && <Line closed points={[axis.a.x, 300 - axis.a.y, axis.b.x, 300 - axis.b.y, axis.c.x, 300 - axis.c.y]}
                                     stroke="black"
-                                    draggable='true' strokeWidth={1}
+                                    draggable='true'
+                                    strokeWidth={1}
                                     fillLinearGradientStartPoint={{ x: axis.a.x, y: 300 - axis.a.y }}
                                     fillLinearGradientEndPoint={{ x: axis.c.x, y: 300 - axis.c.y }}
-                                    fillLinearGradientColorStops={[0, "#" + Math.floor(Math.random() * 16777215).toString(16), 1, "#" + Math.floor(Math.random() * 16777215).toString(16)]} />}
+                                    fillLinearGradientColorStops={[0, color1, 1, color2]} />}
                             </Layer>
                         </Stage>
                     </div>
                     <div className="inputs">
                         <h2 style={{ border: '0', display: selectionInfoVisible ? 'flex' : 'none' }} className="hiddenContent">Choose your input as coordinates or side lengths of the triangle</h2>
-                        <PointsEntryForm changeAnswer={this.changeAnswer} style={{ display: pointsWindowVisible ? 'block' : 'none' }} />
-                        <SidesEntryForm changeAnswer={this.changeAnswer} style={{ display: sidesWindowVisible ? 'block' : 'none' }} />
+                        <PointsEntryForm getRandomColor={this.getRandomColor} changeAnswer={this.changeAnswer} style={{ display: pointsWindowVisible ? 'block' : 'none' }} />
+                        <SidesEntryForm getRandomColor={this.getRandomColor} changeAnswer={this.changeAnswer} style={{ display: sidesWindowVisible ? 'block' : 'none' }} />
                     </div>
                 </div>
                 <div className="answer">
