@@ -13,7 +13,7 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 Also deployed on Heroku:
-Open [https://triangle-front-react.herokuapp.com/](https://triangle-front-react.herokuapp.com/) to view it in the browser.
+Open [https://triangle-front.onrender.com/](https://triangle-front.onrender.com/) to view it in the browser.
 The Heroku deployment might take up to 10 sec to load.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
