@@ -12,9 +12,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-Also deployed on Heroku:
+Also deployed on Render:
 Open [https://triangle-front.onrender.com/](https://triangle-front.onrender.com/) to view it in the browser.
-The Heroku deployment might take up to 10 sec to load.
+The Render deployment might take up to 10 sec to load.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
