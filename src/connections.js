@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // Localhost
-// const baseURL ='https://triangle-back.herokuapp.com/'
-const baseURL ='http://localhost:8080/'
+// const baseURL ='http://localhost:8080/'
+const baseURL ='https://triangle-back.onrender.com'
 
 
 export default axios.create({
